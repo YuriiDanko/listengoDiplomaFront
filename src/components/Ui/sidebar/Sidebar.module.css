@@ -1,0 +1,26 @@
+.sideBar {
+  display: flex;
+  flex-direction: column;
+  background-color: #333333;
+  padding: 10px 10px;
+  border-radius: 0px 15px 15px 0px;
+  width: 300px;
+  height: calc(100vh - 100px);
+}
+
+.userSection {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.playlistSection {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+}
