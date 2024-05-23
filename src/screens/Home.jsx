@@ -1,7 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import '../styles/global.css';
+import TrackCard, { TrackCardSkeleton } from '../components/Ui/trackCard/TrackCard';
+import { useAuth } from '../hooks/auth';
+import axios from 'axios';
+import { Flex, ScrollArea, ScrollAreaAutosize } from '@mantine/core';
 
 export const Home = () => {
-  return <div></div>;
+  const [tracks, setTracks] = useState([]);
+  const { user } = useAuth();
+
+  const getTracks = async () => {
+    try {
+      const response = await axios({
+        method: 'get',
+        url: `http://localhost:8080/recommendations/rock,metal`,
+        headers: {
+          Authorization: 'Bearer ' + user.token,
+        },
+      });
+      const tracksId = response.data
+        .map((track) => {
+          return track.trackId;
+        })
+        .join(',');
+      const tracksInfo = await axios({
+        method: 'get',
+        url: `http://localhost:8080/tracks/${tracksId}`,
+        headers: {
+          Authorization: 'Bearer ' + user.token,
+        },
+      });
+      setTracks(tracksInfo.data.tracks);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTracks();
+  }, []);
+
+  return (
+    <div>
+      <ScrollAreaAutosize h={860}>
+        <div className='recently-played'>
+          {tracks.length > 0
+            ? tracks.map((track) => <TrackCard key={track.trackId} track={track} />)
+            : Array.from(Array(21).keys()).map((index) => <TrackCardSkeleton key={index} />)}
+        </div>
+      </ScrollAreaAutosize>
+      <div className='ai-recommendations'></div>
+    </div>
+  );
 };
 
 export default Home;

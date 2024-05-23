@@ -8,3 +8,11 @@ body {
 .main-body {
   display: flex;
 }
+
+.recently-played {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 30px;
+  gap: 20px;
+}

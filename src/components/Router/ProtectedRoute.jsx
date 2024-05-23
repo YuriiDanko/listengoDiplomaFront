@@ -7,7 +7,7 @@ import '../../styles/global.css';
 import Search from '../Ui/search/Search';
 
 export const ProtectedRoute = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   if (!user || !user.token) {
     return <Navigate to='/login' />;

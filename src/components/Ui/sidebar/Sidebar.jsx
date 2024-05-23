@@ -42,7 +42,7 @@ export const Sidebar = () => {
     <div className={cl.sideBar}>
       <div className={cl.userSection}>
         <div>
-          <Avatar src='' alt='avatar.png' size={'xl'} />
+          <Avatar src='' alt='avatar.png' size={'xl'} mt={20} />
         </div>
         <div>{user.username}</div>
         <Button onClick={logout}>Logout</Button>
