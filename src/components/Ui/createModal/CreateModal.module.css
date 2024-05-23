@@ -1,0 +1,4 @@
+.modalDiv {
+  display: flex;
+  flex-direction: column;
+}

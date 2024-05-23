@@ -3,22 +3,23 @@ import React from 'react';
 import cl from './PlaylistCard.module.css';
 import { IconPlayerPlay } from '@tabler/icons-react';
 
-const PlaylistCard = ({ name }) => {
+const PlaylistCard = ({ playlist, username }) => {
   return (
     <Flex gap={20} className={cl.cardContainer}>
       <div className={cl.playlistCard}>
         <Image
-          src={'https://pics.craiyon.com/2023-06-19/9fe0db86772048e5850e2186323451eb.webp'}
+          src={playlist.imageUrl}
           height={64}
           width={64}
+          style={{ aspectRatio: '1/1' }}
           radius={10}
         />
         <div className={cl.textContainer}>
           <Text size='md' className={cl.playlistName}>
-            {name}
+            {playlist.playlistName}
           </Text>
           <Text size='xs' className={cl.playlistAuthor}>
-            PlaylistAuthor
+            {username}
           </Text>
         </div>
         <ActionIcon variant='filled' size='lg' radius='xl' aria-label='Play'>

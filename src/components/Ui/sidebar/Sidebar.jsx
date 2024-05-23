@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import cl from './Sidebar.module.css';
 import {
   ActionIcon,
@@ -11,11 +11,32 @@ import {
   Text,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconAdjustments, IconPlus } from '@tabler/icons-react';
+import { IconPlus } from '@tabler/icons-react';
 import PlaylistCard from '../playlistCard/PlaylistCard';
+import axios from 'axios';
+import { useAuth } from '../../../hooks/auth';
+import CreateModal from '../createModal/CreateModal';
 
-export const Sidebar = ({ logout, username }) => {
+export const Sidebar = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const { user, logout } = useAuth();
+
+  const [playlists, setPlaylists] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const respone = await axios({
+          method: 'get',
+          url: `http://localhost:8080/get-playlists/${user.userId}`,
+          headers: {
+            Authorization: 'Bearer ' + user.token,
+          },
+        });
+        setPlaylists(respone.data);
+      } catch (error) {}
+    })();
+  }, []);
 
   return (
     <div className={cl.sideBar}>
@@ -23,13 +44,20 @@ export const Sidebar = ({ logout, username }) => {
         <div>
           <Avatar src='' alt='avatar.png' size={'xl'} />
         </div>
-        <div>{username}</div>
+        <div>{user.username}</div>
         <Button onClick={logout}>Logout</Button>
       </div>
       <div className={cl.playlistSection}>
         <Divider my={'md'} />
         <Text>My Playlists</Text>
-        <Modal opened={opened} onClose={close} title='Create Playlist'></Modal>
+        <Modal opened={opened} onClose={close} title='Create Playlist'>
+          <CreateModal
+            onClose={close}
+            user={user}
+            setPlaylists={setPlaylists}
+            playlists={playlists}
+          />
+        </Modal>
         <Flex align={'center'} gap={8}>
           <ActionIcon onClick={open} variant='filled' size='lg' radius='xl' aria-label='Settings'>
             <IconPlus style={{ width: '70%', height: '70%' }} stroke={1.5} />
@@ -38,13 +66,18 @@ export const Sidebar = ({ logout, username }) => {
         </Flex>
         <ScrollAreaAutosize h={650}>
           <Flex direction='column' gap={15}>
-            <PlaylistCard name={'PlayList'} />
-            <PlaylistCard name={'PlayListPlayList'} />
-            <PlaylistCard name={'PlayListPlayList'} />
-            <PlaylistCard name={'PlayList'} />
-            <PlaylistCard name={'PlayListPlayList'} />
-            <PlaylistCard name={'PlayList'} />
-            <PlaylistCard name={'PlayList'} />
+            {playlists.length !== 0 ? (
+              playlists &&
+              playlists.map((playlist) => (
+                <PlaylistCard
+                  key={playlist.playlistId}
+                  playlist={playlist}
+                  username={user.username}
+                />
+              ))
+            ) : (
+              <Text>You have no playlists yet.</Text>
+            )}
           </Flex>
         </ScrollAreaAutosize>
       </div>
