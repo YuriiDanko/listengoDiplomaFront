@@ -2,8 +2,11 @@ import React from 'react';
 import cl from './Search.module.css';
 import { TextInput } from '@mantine/core';
 import { IconCheckbox, IconHome, IconList, IconSearch } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={cl.searchBody}>
       <div className={cl.searchBar}>
@@ -12,8 +15,8 @@ const Search = () => {
         </div>
       </div>
       <div className={cl.icons}>
-        <IconHome></IconHome>
-        <IconCheckbox></IconCheckbox>
+        <IconHome onClick={() => navigate('/')} style={{ cursor: 'pointer' }} />
+        <IconCheckbox onClick={() => navigate('/recommendations')} style={{ cursor: 'pointer' }} />
       </div>
     </div>
   );

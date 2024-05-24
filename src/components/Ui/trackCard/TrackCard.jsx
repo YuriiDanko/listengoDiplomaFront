@@ -1,10 +1,18 @@
-import React from 'react';
-import cl from './TrackCard.module.css';
+import React, { useContext } from 'react';
 import { Card, Image, Skeleton, Text } from '@mantine/core';
+import { useTrackContext } from '../../../hooks/track';
 
 const TrackCard = ({ track }) => {
+  const { clickTrack } = useTrackContext();
+
   return (
-    <Card onClick={() => play(track.trakcId)} padding={'lg'} maw={225}>
+    <Card
+      onClick={() => {
+        clickTrack(track);
+      }}
+      padding={'lg'}
+      maw={225}
+    >
       <div>
         <Image src={track.imageUrl} />
       </div>

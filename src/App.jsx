@@ -4,6 +4,7 @@ import '@mantine/core/styles.css';
 import AppRouter from './components/Router/AppRouter';
 import AuthProvider from './hooks/auth';
 import { BrowserRouter } from 'react-router-dom';
+import { TrackProvider } from './hooks/track';
 
 const myColor = [
   '#f5f5f5',
@@ -28,11 +29,13 @@ const theme = createTheme({
 function App() {
   return (
     <MantineProvider forceColorScheme='dark' theme={theme}>
-      <AuthProvider>
-        <BrowserRouter>
-          <AppRouter />
-        </BrowserRouter>
-      </AuthProvider>
+      <TrackProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <AppRouter />
+          </BrowserRouter>
+        </AuthProvider>
+      </TrackProvider>
     </MantineProvider>
   );
 }

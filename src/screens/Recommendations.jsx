@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/auth';
 import axios from 'axios';
 import { Flex, ScrollArea, ScrollAreaAutosize } from '@mantine/core';
 
-export const Home = () => {
+export const Recommendations = () => {
   const [tracks, setTracks] = useState([]);
   const { user } = useAuth();
 
@@ -54,4 +54,4 @@ export const Home = () => {
   );
 };
 
-export default Home;
+export default Recommendations;

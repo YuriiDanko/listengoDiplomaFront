@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-
 import axios from 'axios';
+import { useTrackContext } from './track';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const { removeTrack } = useTrackContext();
   // State to hold the authentication token
   const [user, setUser] = useState(() => {
     // Initialize state from localStorage
@@ -23,7 +24,7 @@ const AuthProvider = ({ children }) => {
   }, [user]);
 
   const logout = () => {
-    console.log('logged out');
+    removeTrack();
     setUser(null);
   };
 
