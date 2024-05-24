@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { useTrackContext } from './track';
+import useSpotifyAuth from './spotify';
 
 const AuthContext = createContext();
 
@@ -12,6 +13,7 @@ const AuthProvider = ({ children }) => {
     const userString = localStorage.getItem('user');
     return userString ? JSON.parse(userString) : null;
   });
+  const { initiateAuth } = useSpotifyAuth();
 
   useEffect(() => {
     if (user && user.token) {
@@ -29,13 +31,12 @@ const AuthProvider = ({ children }) => {
   };
 
   const login = async (username, password) => {
-    console.log(username, password);
     const res = await axios.post('http://localhost:8080/auth/login', {
       username,
       password,
     });
-    console.log(res.data.token);
     setUser(res.data);
+    initiateAuth();
     return res;
   };
 

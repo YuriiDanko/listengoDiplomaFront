@@ -8,10 +8,8 @@ import { Recommendations } from '../../screens/Recommendations';
 const AppRouter = () => {
   const { user, logout } = useAuth();
 
-  // Define routes accessible only to authenticated users
   return (
     <Routes>
-      {/* Public Routes */}
       {!user?.token && (
         <>
           <Route path='/register' element={<Auth isLogin={false} />} />
@@ -19,7 +17,6 @@ const AppRouter = () => {
         </>
       )}
 
-      {/* Protected Routes */}
       {user?.token && (
         <Route path='/' element={<ProtectedRoute />}>
           <Route path='/recommendations' element={<Recommendations />} />
@@ -27,7 +24,6 @@ const AppRouter = () => {
         </Route>
       )}
 
-      {/* Fallback Route */}
       <Route path='*' element={<Navigate to={user?.token ? '/' : '/login'} replace />} />
     </Routes>
   );

@@ -34,7 +34,9 @@ export const Sidebar = () => {
           },
         });
         setPlaylists(respone.data);
-      } catch (error) {}
+      } catch (error) {
+        logout();
+      }
     })();
   }, []);
 
