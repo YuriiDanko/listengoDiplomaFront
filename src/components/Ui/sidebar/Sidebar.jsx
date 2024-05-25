@@ -66,7 +66,7 @@ export const Sidebar = () => {
           </ActionIcon>
           Create Playlist
         </Flex>
-        <ScrollAreaAutosize h={650}>
+        <ScrollAreaAutosize h={635}>
           <Flex direction='column' gap={15}>
             {playlists.length !== 0 ? (
               playlists &&

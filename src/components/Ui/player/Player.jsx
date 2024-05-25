@@ -2,22 +2,25 @@ import React, { useEffect, useState } from 'react';
 import cl from './Player.module.css';
 import PlayingTrackCard from '../playingTrack/PlayingTrackCard';
 import {
+  IconMusicUp,
   IconPlayerPauseFilled,
   IconPlayerPlayFilled,
   IconPlayerSkipBackFilled,
   IconPlayerSkipForwardFilled,
+  IconVolume,
+  IconVolumeOff,
 } from '@tabler/icons-react';
-import { ActionIcon, Flex, Slider } from '@mantine/core';
-import { useAuth } from '../../../hooks/auth';
+import { ActionIcon, Flex, Slider, Text } from '@mantine/core';
 import { useTrackContext } from '../../../hooks/track';
 import axios from 'axios';
+import { convertMillisToMinutesAndSeconds } from '../../../helpers/time';
 
 const Player = () => {
-  const { user } = useAuth();
   const [player, setPlayer] = useState();
   const { track } = useTrackContext();
   const [deviceId, setDeviceId] = useState();
   const [playerState, setPlayerState] = useState();
+  const [volume, setVolume] = useState();
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -33,7 +36,7 @@ const Player = () => {
         },
         volume: 0.5,
       });
-
+      setVolume(player._options.volume * 100);
       setPlayer(player);
 
       player.addListener('ready', ({ device_id }) => {
@@ -45,6 +48,17 @@ const Player = () => {
       player.addListener('not_ready', ({ device_id }) => {
         console.log('Device ID has gone offline', device_id);
       });
+
+      setInterval(() => {
+        player.getCurrentState().then((state) => {
+          if (!state) {
+            console.error('User is not playing music through the Web Playback SDK');
+            return;
+          }
+
+          setPlayerState(state);
+        });
+      }, 1000);
 
       player.connect();
     };
@@ -79,6 +93,16 @@ const Player = () => {
     });
   };
 
+  const changePlayerVolume = (value) => {
+    setVolume(value);
+    player.setVolume(value / 100);
+  };
+
+  const setPosition = (e) => {
+    const currentPosition = (track.durationMs / 100) * e;
+    player.seek(currentPosition);
+  };
+
   useEffect(() => {
     playSong();
   }, [track]);
@@ -91,12 +115,8 @@ const Player = () => {
           <ActionIcon>
             <IconPlayerSkipBackFilled />
           </ActionIcon>
-          <ActionIcon
-            onClick={() => {
-              togglePlay();
-            }}
-          >
-            {playerState && !playerState.paused ? (
+          <ActionIcon onClick={() => togglePlay()}>
+            {playerState && playerState.paused ? (
               <IconPlayerPlayFilled />
             ) : (
               <IconPlayerPauseFilled />
@@ -107,10 +127,23 @@ const Player = () => {
           </ActionIcon>
         </Flex>
         <div className={cl.playerSlider}>
-          <Slider />
+          <Text>
+            {playerState ? convertMillisToMinutesAndSeconds(playerState.position) : '00:00'}
+          </Text>
+          <div style={{ width: 500 }}>
+            <Slider
+              label={null}
+              value={playerState ? (playerState.position / track.durationMs) * 100 : 0}
+              onChangeEnd={(e) => setPosition(e)}
+            />
+          </div>
+          <Text>{track ? convertMillisToMinutesAndSeconds(track.durationMs) : '00:00'}</Text>
         </div>
       </div>
-      <div>SoundValue</div>
+      <Flex align={'center'} gap={5}>
+        {volume !== 0 ? <IconVolume /> : <IconVolumeOff />}
+        <Slider w={100} value={volume} onChange={changePlayerVolume} />
+      </Flex>
     </div>
   );
 };

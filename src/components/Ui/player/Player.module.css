@@ -3,10 +3,11 @@
   justify-content: space-between;
   align-items: center;
   background-color: #191919;
-  padding: 10px;
+  padding: 0px 20px;
   height: 100px;
   width: 100%;
   position: relative;
+  box-shadow: inset 2px 2px 30px rgba(0, 0, 0, 0.405);
 }
 
 .playerControls {
@@ -21,5 +22,7 @@
 }
 
 .playerSlider {
-  width: 500px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

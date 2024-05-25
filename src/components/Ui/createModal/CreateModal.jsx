@@ -1,4 +1,4 @@
-import { Button, Flex, TextInput } from '@mantine/core';
+import { Button, Checkbox, Flex, TextInput } from '@mantine/core';
 import React, { useState } from 'react';
 import { useAuth } from '../../../hooks/auth';
 import axios from 'axios';
@@ -8,12 +8,12 @@ const CreateModal = ({ onClose, setPlaylists }) => {
   const [inputs, setInputs] = useState({
     playlistName: '',
     imageUrl: '',
+    isPrivate: false,
   });
 
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      console.log('hello');
       const response = await axios({
         method: 'post',
         url: `http://localhost:8080/create-playlist/${user.userId}`,
@@ -23,6 +23,7 @@ const CreateModal = ({ onClose, setPlaylists }) => {
         data: {
           playlistName: inputs.playlistName,
           imageUrl: inputs.imageUrl,
+          isPrivate: inputs.isPrivate,
         },
       });
       setPlaylists((previous) => [...previous, response.data]);
@@ -33,7 +34,7 @@ const CreateModal = ({ onClose, setPlaylists }) => {
   };
 
   return (
-    <Flex direction={'column'} gap={10}>
+    <Flex direction={'column'} gap={15}>
       <TextInput
         label='Playlist Name'
         placeholder='Enter name'
@@ -46,6 +47,11 @@ const CreateModal = ({ onClose, setPlaylists }) => {
         value={inputs.imageUrl}
         onChange={(e) => setInputs({ ...inputs, imageUrl: e.target.value })}
       ></TextInput>
+      <Checkbox
+        label='Make this Playlist private'
+        value={inputs.isPrivate}
+        onChange={(e) => setInputs({ ...inputs, isPrivate: e.currentTarget.checked })}
+      />
       <Button
         onClick={(event) => {
           handleClick(event);

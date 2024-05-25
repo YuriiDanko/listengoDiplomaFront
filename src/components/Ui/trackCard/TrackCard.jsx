@@ -12,6 +12,7 @@ const TrackCard = ({ track }) => {
       }}
       padding={'lg'}
       maw={225}
+      shadow='xl'
     >
       <div>
         <Image src={track.imageUrl} />

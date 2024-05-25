@@ -5,8 +5,6 @@ import { Flex, Image, Text } from '@mantine/core';
 const PlayingTrackCard = () => {
   const { track } = useTrackContext();
 
-  console.log(track);
-
   if (!track) {
     return (
       <Flex gap={20} maw={500}>

@@ -1,7 +1,7 @@
 import { ActionIcon, Flex, Image, Text } from '@mantine/core';
 import React from 'react';
 import cl from './PlaylistCard.module.css';
-import { IconPlayerPlay } from '@tabler/icons-react';
+import { IconX } from '@tabler/icons-react';
 
 const PlaylistCard = ({ playlist, username }) => {
   return (
@@ -12,7 +12,7 @@ const PlaylistCard = ({ playlist, username }) => {
           height={64}
           width={64}
           style={{ aspectRatio: '1/1' }}
-          radius={10}
+          radius={5}
         />
         <div className={cl.textContainer}>
           <Text size='md' className={cl.playlistName}>
@@ -23,7 +23,7 @@ const PlaylistCard = ({ playlist, username }) => {
           </Text>
         </div>
         <ActionIcon variant='filled' size='lg' radius='xl' aria-label='Play'>
-          <IconPlayerPlay style={{ width: '70%', height: '70%' }} stroke={1.5} />
+          <IconX style={{ width: '70%', height: '70%' }} stroke={1.5} />
         </ActionIcon>
       </div>
     </Flex>
