@@ -74,7 +74,7 @@ export const Sidebar = () => {
                 <PlaylistCard
                   key={playlist.playlistId}
                   playlist={playlist}
-                  username={user.username}
+                  setPlaylists={setPlaylists}
                 />
               ))
             ) : (

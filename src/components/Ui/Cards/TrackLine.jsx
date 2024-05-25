@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { Card, Image, Skeleton, Text } from '@mantine/core';
+import { Card, Flex, Image, Text } from '@mantine/core';
+import React from 'react';
 import { useTrackContext } from '../../../hooks/track';
 
-const TrackCard = ({ track }) => {
+const TrackLine = ({ track }) => {
   const { clickTrack } = useTrackContext();
 
   return (
@@ -11,7 +11,7 @@ const TrackCard = ({ track }) => {
         clickTrack(track);
       }}
       padding={'lg'}
-      maw={225}
+      w={225}
       shadow='xl'
       style={{ cursor: 'pointer' }}
     >
@@ -28,7 +28,8 @@ const TrackCard = ({ track }) => {
   );
 };
 
-export const TrackCardSkeleton = () => {
+export const TrackLineSkeleton = () => {
   return <Skeleton w={225} radius={'md'} height={260} />;
 };
-export default TrackCard;
+
+export default TrackLine;

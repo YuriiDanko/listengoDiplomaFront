@@ -34,7 +34,7 @@ const Player = () => {
         getOAuthToken: (cb) => {
           cb(localStorage.getItem('spotify_access_token'));
         },
-        volume: 0.5,
+        volume: 0.3,
       });
       setVolume(player._options.volume * 100);
       setPlayer(player);

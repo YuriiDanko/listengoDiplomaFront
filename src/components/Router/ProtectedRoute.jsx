@@ -17,7 +17,7 @@ export const ProtectedRoute = () => {
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
       <div className='main-body'>
         <Sidebar />
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', width: '100%' }}>
           <Search />
           <Outlet />
         </div>

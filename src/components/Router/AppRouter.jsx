@@ -4,6 +4,7 @@ import { Auth } from '../../screens/auth';
 import { useAuth } from '../../hooks/auth';
 import { Button } from '@mantine/core';
 import { Recommendations } from '../../screens/Recommendations';
+import SearchPage from '../../screens/SearchPage';
 
 const AppRouter = () => {
   const { user, logout } = useAuth();
@@ -20,7 +21,7 @@ const AppRouter = () => {
       {user?.token && (
         <Route path='/' element={<ProtectedRoute />}>
           <Route path='/recommendations' element={<Recommendations />} />
-          <Route path='/profile' element={<div>User Profile</div>} />
+          <Route path='/search' element={<SearchPage />} />
         </Route>
       )}
 

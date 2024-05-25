@@ -3,7 +3,7 @@ import '../styles/global.css';
 import TrackCard, { TrackCardSkeleton } from '../components/Ui/trackCard/TrackCard';
 import { useAuth } from '../hooks/auth';
 import axios from 'axios';
-import { Flex, ScrollArea, ScrollAreaAutosize } from '@mantine/core';
+import { Flex, ScrollArea, ScrollAreaAutosize, SimpleGrid } from '@mantine/core';
 
 export const Recommendations = () => {
   const [tracks, setTracks] = useState([]);
@@ -43,11 +43,11 @@ export const Recommendations = () => {
   return (
     <div>
       <ScrollAreaAutosize h={860}>
-        <div className='recently-played'>
+        <SimpleGrid cols={7} p={30}>
           {tracks.length > 0
             ? tracks.map((track) => <TrackCard key={track.trackId} track={track} />)
             : Array.from(Array(21).keys()).map((index) => <TrackCardSkeleton key={index} />)}
-        </div>
+        </SimpleGrid>
       </ScrollAreaAutosize>
       <div className='ai-recommendations'></div>
     </div>
