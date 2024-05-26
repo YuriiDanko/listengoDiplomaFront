@@ -1,10 +1,7 @@
 import { Card, Image, Skeleton, Text } from '@mantine/core';
 import React from 'react';
-import { useTrackContext } from '../../../hooks/track';
 
 const ArtistCard = ({ artist }) => {
-  const { clickTrack } = useTrackContext();
-
   return (
     <Card padding={'lg'} w={225} shadow='xl' style={{ cursor: 'pointer' }}>
       <div>

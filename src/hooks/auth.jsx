@@ -6,10 +6,8 @@ import useSpotifyAuth from './spotify';
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const { removeTrack } = useTrackContext();
-  // State to hold the authentication token
+  const { removeTracks } = useTrackContext();
   const [user, setUser] = useState(() => {
-    // Initialize state from localStorage
     const userString = localStorage.getItem('user');
     return userString ? JSON.parse(userString) : null;
   });
@@ -26,7 +24,7 @@ const AuthProvider = ({ children }) => {
   }, [user]);
 
   const logout = () => {
-    removeTrack();
+    removeTracks();
     setUser(null);
   };
 

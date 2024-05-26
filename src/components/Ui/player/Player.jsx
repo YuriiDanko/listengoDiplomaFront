@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import cl from './Player.module.css';
 import PlayingTrackCard from '../playingTrack/PlayingTrackCard';
 import {
-  IconMusicUp,
   IconPlayerPauseFilled,
   IconPlayerPlayFilled,
   IconPlayerSkipBackFilled,
@@ -17,10 +16,16 @@ import { convertMillisToMinutesAndSeconds } from '../../../helpers/time';
 
 const Player = () => {
   const [player, setPlayer] = useState();
-  const { track } = useTrackContext();
+  const { tracks } = useTrackContext();
   const [deviceId, setDeviceId] = useState();
   const [playerState, setPlayerState] = useState();
   const [volume, setVolume] = useState();
+
+  const spotifyURIs = tracks
+    ? tracks.map((track) => {
+        return `spotify:track:${track.trackId}`;
+      })
+    : [];
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -52,7 +57,6 @@ const Player = () => {
       setInterval(() => {
         player.getCurrentState().then((state) => {
           if (!state) {
-            console.error('User is not playing music through the Web Playback SDK');
             return;
           }
 
@@ -65,6 +69,7 @@ const Player = () => {
   }, []);
 
   async function playSong() {
+    console.log(spotifyURIs);
     if (deviceId) {
       await axios({
         method: 'PUT',
@@ -74,7 +79,7 @@ const Player = () => {
           Authorization: `Bearer ${localStorage.getItem('spotify_access_token')}`,
         },
         data: {
-          uris: [`spotify:track:${track.trackId}`],
+          uris: spotifyURIs,
           device_id: deviceId,
         },
       });
@@ -85,7 +90,6 @@ const Player = () => {
     player.togglePlay();
     player.getCurrentState().then((state) => {
       if (!state) {
-        console.error('User is not playing music through the Web Playback SDK');
         return;
       }
 
@@ -99,20 +103,26 @@ const Player = () => {
   };
 
   const setPosition = (e) => {
-    const currentPosition = (track.durationMs / 100) * e;
+    console.log('changed position');
+    const currentPosition = (playerState.track_window.current_track.duration_ms / 100) * e;
+    console.log(player);
     player.seek(currentPosition);
   };
 
   useEffect(() => {
     playSong();
-  }, [track]);
+  }, [tracks]);
 
   return (
     <div className={cl.player}>
-      <PlayingTrackCard />
+      <PlayingTrackCard track={playerState ? playerState.track_window.current_track : null} />
       <div className={cl.playerControls}>
         <Flex gap={25}>
-          <ActionIcon>
+          <ActionIcon
+            onClick={() => {
+              player.previousTrack();
+            }}
+          >
             <IconPlayerSkipBackFilled />
           </ActionIcon>
           <ActionIcon onClick={() => togglePlay()}>
@@ -122,7 +132,7 @@ const Player = () => {
               <IconPlayerPauseFilled />
             )}
           </ActionIcon>
-          <ActionIcon>
+          <ActionIcon onClick={() => player.nextTrack()}>
             <IconPlayerSkipForwardFilled />
           </ActionIcon>
         </Flex>
@@ -133,11 +143,20 @@ const Player = () => {
           <div style={{ width: 500 }}>
             <Slider
               label={null}
-              value={playerState ? (playerState.position / track.durationMs) * 100 : 0}
-              onChangeEnd={(e) => setPosition(e)}
+              value={
+                playerState
+                  ? (playerState.position / playerState.track_window.current_track.duration_ms) *
+                    100
+                  : 0
+              }
+              onChange={(e) => setPosition(e)}
             />
           </div>
-          <Text>{track ? convertMillisToMinutesAndSeconds(track.durationMs) : '00:00'}</Text>
+          <Text>
+            {playerState
+              ? convertMillisToMinutesAndSeconds(playerState.track_window.current_track.duration_ms)
+              : '00:00'}
+          </Text>
         </div>
       </div>
       <Flex align={'center'} gap={5}>

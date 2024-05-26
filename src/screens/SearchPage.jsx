@@ -27,7 +27,7 @@ const SearchPage = () => {
     const trackString = searchResult.data.tracks.map((track) => track.trackId).join(',');
     const albumsString = searchResult.data.albums.map((album) => album.albumId).join(',');
     const artistsString = searchResult.data.artists
-      .slice(0, 5)
+      .slice(0, 1)
       .map((artist) => artist.artistId)
       .join(',');
 
@@ -86,7 +86,7 @@ const SearchPage = () => {
         </Text>
         <SimpleGrid cols={7}>
           {albums.length > 0
-            ? albums.map((album) => <AlbumCard key={album.albumId} album={album} />)
+            ? albums.map((album) => <AlbumCard key={album.albumId} album={album} user={user} />)
             : Array.from(Array(14).keys()).map((index) => <AlbumCardSkeleton key={index} />)}
         </SimpleGrid>
         <Text fw={'bold'} pb={10} pt={10}>
