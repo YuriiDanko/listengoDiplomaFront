@@ -71,7 +71,7 @@ const SearchPage = () => {
   }, [searchParams]);
 
   return (
-    <ScrollAreaAutosize h={860}>
+    <ScrollAreaAutosize h={780}>
       <Flex p={30} direction={'column'} w={'100%'}>
         <Text fw={'bold'} pb={10}>
           Tracks

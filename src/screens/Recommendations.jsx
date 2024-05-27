@@ -42,7 +42,7 @@ export const Recommendations = () => {
 
   return (
     <div>
-      <ScrollAreaAutosize h={860}>
+      <ScrollAreaAutosize h={780}>
         <SimpleGrid cols={7} p={30}>
           {tracks.length > 0
             ? tracks.map((track) => <TrackCard key={track.trackId} track={track} />)

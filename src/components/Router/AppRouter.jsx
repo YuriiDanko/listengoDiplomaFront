@@ -6,6 +6,8 @@ import { Button } from '@mantine/core';
 import { Recommendations } from '../../screens/Recommendations';
 import SearchPage from '../../screens/SearchPage';
 import HomePage from '../../screens/HomePage';
+import AlbumPage from '../../screens/AlbumPage';
+import ArtistPage from '../../screens/ArtistPage';
 
 const AppRouter = () => {
   const { user, logout } = useAuth();
@@ -24,6 +26,8 @@ const AppRouter = () => {
           <Route path='/recommendations' element={<Recommendations />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='/' element={<HomePage />} />
+          <Route path='/album' element={<AlbumPage />} />
+          <Route path='/artist' element={<ArtistPage />} />
         </Route>
       )}
 

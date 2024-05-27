@@ -3,7 +3,7 @@ import React from 'react';
 
 const ArtistCard = ({ artist }) => {
   return (
-    <Card padding={'lg'} w={225} shadow='xl' style={{ cursor: 'pointer' }}>
+    <Card padding={'lg'} maw={225} shadow='xl' style={{ cursor: 'pointer' }}>
       <div>
         <Image src={artist.imageUrl} h={250} />
       </div>

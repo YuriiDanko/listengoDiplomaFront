@@ -1,18 +1,25 @@
 import { Card, Image, Skeleton, Text } from '@mantine/core';
 import React from 'react';
 import { useTrackContext } from '../../../hooks/track';
+import { useNavigate } from 'react-router-dom';
 
 const AlbumCard = ({ album, user }) => {
   const { clickAlbum } = useTrackContext();
+  const navigate = useNavigate();
+
+  const goToAlbumPage = (album) => {
+    navigate('/album', { state: { album } });
+  };
 
   return (
     <Card
       padding={'lg'}
-      w={225}
+      maw={225}
       shadow='xl'
       style={{ cursor: 'pointer' }}
       onClick={() => {
         clickAlbum(album, user);
+        goToAlbumPage(album);
       }}
     >
       <div>
@@ -29,7 +36,7 @@ const AlbumCard = ({ album, user }) => {
 };
 
 export const AlbumCardSkeleton = () => {
-  return <Skeleton w={225} radius={'md'} height={260} />;
+  return <Skeleton maw={225} radius={'md'} height={260} />;
 };
 
 export default AlbumCard;

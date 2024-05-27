@@ -149,7 +149,7 @@ const Player = () => {
                     100
                   : 0
               }
-              onChange={(e) => setPosition(e)}
+              onChangeEnd={(e) => setPosition(e)}
             />
           </div>
           <Text>

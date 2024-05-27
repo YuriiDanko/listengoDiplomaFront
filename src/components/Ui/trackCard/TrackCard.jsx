@@ -1,34 +1,53 @@
 import React, { useContext } from 'react';
-import { Card, Image, Skeleton, Text } from '@mantine/core';
+import { ActionIcon, Card, Flex, Image, Skeleton, Text } from '@mantine/core';
 import { useTrackContext } from '../../../hooks/track';
+import { IconPlus } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 
 const TrackCard = ({ track }) => {
   const { clickTrack } = useTrackContext();
+  const navigate = useNavigate();
+
+  const goToArtistPage = (artistId) => {
+    navigate('/artist', { state: { artistId } });
+  };
 
   return (
-    <Card
-      onClick={() => {
-        clickTrack(track);
-      }}
-      padding={'lg'}
-      maw={225}
-      shadow='xl'
-      style={{ cursor: 'pointer' }}
-    >
+    <Card padding={'lg'} maw={225} shadow='xl' style={{ cursor: 'pointer' }}>
       <div>
-        <Image src={track.imageUrl} />
+        <Image
+          src={track.imageUrl}
+          onClick={() => {
+            clickTrack(track);
+          }}
+        />
       </div>
       <Card.Section inheritPadding>
-        <Text size='md' fw={'bold'} truncate='end'>
-          {track.trackName}
-        </Text>
-        <Text pb={5}>{track.artist.artistName}</Text>
+        <div style={{ width: '180px' }}>
+          <Text size='md' fw={'bold'} truncate='end'>
+            {track.trackName}
+          </Text>
+          <Text
+            pb={5}
+            truncate='end'
+            onClick={() => {
+              goToArtistPage(track.artist.artistId);
+            }}
+          >
+            {track.artist.artistName}
+          </Text>
+        </div>
+        <Flex pb={15} justify={'center'}>
+          <ActionIcon>
+            <IconPlus></IconPlus>
+          </ActionIcon>
+        </Flex>
       </Card.Section>
     </Card>
   );
 };
 
 export const TrackCardSkeleton = () => {
-  return <Skeleton w={225} radius={'md'} height={260} />;
+  return <Skeleton maw={225} radius={'md'} height={260} />;
 };
 export default TrackCard;
