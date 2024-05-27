@@ -3,7 +3,7 @@ import React from 'react';
 import { useTrackContext } from '../../../hooks/track';
 import { useNavigate } from 'react-router-dom';
 
-const AlbumCard = ({ album, user }) => {
+const AlbumCard = ({ album }) => {
   const { clickAlbum } = useTrackContext();
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const AlbumCard = ({ album, user }) => {
       shadow='xl'
       style={{ cursor: 'pointer' }}
       onClick={() => {
-        clickAlbum(album, user);
+        clickAlbum(album);
         goToAlbumPage(album);
       }}
     >

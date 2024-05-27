@@ -86,7 +86,7 @@ const SearchPage = () => {
         </Text>
         <SimpleGrid cols={7}>
           {albums.length > 0
-            ? albums.map((album) => <AlbumCard key={album.albumId} album={album} user={user} />)
+            ? albums.map((album) => <AlbumCard key={album.albumId} album={album} />)
             : Array.from(Array(14).keys()).map((index) => <AlbumCardSkeleton key={index} />)}
         </SimpleGrid>
         <Text fw={'bold'} pb={10} pt={10}>

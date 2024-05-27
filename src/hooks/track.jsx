@@ -13,43 +13,20 @@ export const TrackProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    const storedTrack = JSON.parse(localStorage.getItem('track'));
+    const storedTrack = JSON.parse(localStorage.getItem('tracks'));
     if (storedTrack) {
       clickTrack(storedTrack);
     }
   }, []);
 
   const clickTrack = (clickedTrack) => {
-    localStorage.setItem('tracks', JSON.stringify([clickedTrack]));
-    setTracks([clickedTrack]);
+    localStorage.setItem('tracks', JSON.stringify(clickedTrack));
+    setTracks(clickedTrack);
   };
 
-  const clickAlbum = async (clickedAlbum, user) => {
-    const response = await axios({
-      method: 'get',
-      url: `http://localhost:8080/albums/${clickedAlbum.albumId}/tracks`,
-      headers: {
-        Authorization: 'Bearer ' + user.token,
-      },
-    });
-
-    console.log(response.data);
-    const tracksId = response.data
-      .map((track) => {
-        return track.trackId;
-      })
-      .join(',');
-
-    const albumTracks = await axios({
-      method: 'get',
-      url: `http://localhost:8080/tracks/${tracksId}`,
-      headers: {
-        Authorization: 'Bearer ' + user.token,
-      },
-    });
-
-    localStorage.setItem('tracks', JSON.stringify(albumTracks.data.tracks));
-    setTracks(albumTracks.data.tracks);
+  const clickAlbum = (clickedAlbum) => {
+    localStorage.setItem('tracks', JSON.stringify(clickedAlbum));
+    setTracks(clickedAlbum);
   };
 
   const removeTracks = () => {

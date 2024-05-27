@@ -1,7 +1,8 @@
-import { Card, Image, Text } from '@mantine/core';
+import { ActionIcon, Card, Flex, Image, Text } from '@mantine/core';
 import React from 'react';
 import { useTrackContext } from '../../../hooks/track';
 import { useNavigate } from 'react-router-dom';
+import { IconPlus } from '@tabler/icons-react';
 
 const TrackLine = ({ track }) => {
   const { clickTrack } = useTrackContext();
@@ -17,22 +18,34 @@ const TrackLine = ({ track }) => {
         <Image
           src={track.imageUrl}
           onClick={() => {
-            clickTrack(track);
+            clickTrack([track]);
           }}
         />
       </div>
       <Card.Section inheritPadding>
-        <Text size='md' fw={'bold'} truncate='end'>
-          {track.trackName}
-        </Text>
-        <Text
-          pb={5}
-          onClick={() => {
-            goToArtistPage(track.artist.artistId);
-          }}
-        >
-          {track.artist.artistName}
-        </Text>
+        <Flex direction={'column'}>
+          <Text size='md' fw={'bold'} truncate='end'>
+            {track.trackName}
+          </Text>
+          <Text
+            pb={5}
+            onClick={() => {
+              goToArtistPage(track.artist.artistId);
+            }}
+          >
+            {track.artist.artistName}
+          </Text>
+        </Flex>
+        <Flex pb={15} justify={'center'}>
+          <ActionIcon
+            radius={20}
+            onClick={() => {
+              console.log('added ' + track.trackName);
+            }}
+          >
+            <IconPlus></IconPlus>
+          </ActionIcon>
+        </Flex>
       </Card.Section>
     </Card>
   );

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { ActionIcon, Card, Flex, Image, Skeleton, Text } from '@mantine/core';
 import { useTrackContext } from '../../../hooks/track';
 import { IconPlus } from '@tabler/icons-react';
@@ -18,7 +18,7 @@ const TrackCard = ({ track }) => {
         <Image
           src={track.imageUrl}
           onClick={() => {
-            clickTrack(track);
+            clickTrack([track]);
           }}
         />
       </div>
@@ -38,7 +38,12 @@ const TrackCard = ({ track }) => {
           </Text>
         </div>
         <Flex pb={15} justify={'center'}>
-          <ActionIcon>
+          <ActionIcon
+            radius={20}
+            onClick={() => {
+              console.log('added ' + track.trackName);
+            }}
+          >
             <IconPlus></IconPlus>
           </ActionIcon>
         </Flex>

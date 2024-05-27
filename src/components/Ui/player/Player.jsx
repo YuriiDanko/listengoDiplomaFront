@@ -21,11 +21,12 @@ const Player = () => {
   const [playerState, setPlayerState] = useState();
   const [volume, setVolume] = useState();
 
-  const spotifyURIs = tracks
-    ? tracks.map((track) => {
-        return `spotify:track:${track.trackId}`;
-      })
-    : [];
+  const spotifyURIs =
+    tracks && tracks.length > 0
+      ? tracks.map((track) => {
+          return `spotify:track:${track.trackId}`;
+        })
+      : [];
 
   useEffect(() => {
     const script = document.createElement('script');

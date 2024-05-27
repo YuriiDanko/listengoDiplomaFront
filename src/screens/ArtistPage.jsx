@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
 import AlbumTrackCard from '../components/Ui/Cards/AlbumTrackCard';
 import AlbumCard from '../components/Ui/Cards/AlbumCard';
+import { useTrackContext } from '../hooks/track';
 
 const ArtistPage = () => {
   const location = useLocation();
@@ -13,6 +14,7 @@ const ArtistPage = () => {
   const [topTracks, setTopTracks] = useState([]);
   const { user } = useAuth();
   const [albums, setAlbums] = useState([]);
+  const { setTracks } = useTrackContext();
 
   const getArtist = async () => {
     const response = await axios({

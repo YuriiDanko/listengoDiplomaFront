@@ -1,9 +1,23 @@
 import { Card, Image, Skeleton, Text } from '@mantine/core';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ArtistCard = ({ artist }) => {
+  const navigate = useNavigate();
+
+  const goToArtistPage = (artistId) => {
+    navigate('/artist', { state: { artistId } });
+  };
   return (
-    <Card padding={'lg'} maw={225} shadow='xl' style={{ cursor: 'pointer' }}>
+    <Card
+      padding={'lg'}
+      maw={300}
+      shadow='xl'
+      style={{ cursor: 'pointer' }}
+      onClick={() => {
+        goToArtistPage(artist.artistId);
+      }}
+    >
       <div>
         <Image src={artist.imageUrl} h={250} />
       </div>

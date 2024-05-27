@@ -12,6 +12,7 @@ const Search = () => {
     e.preventDefault();
     const queryParams = new URLSearchParams({ query: searchQuery });
     navigate({ pathname: '/search', search: `?${queryParams}` });
+    setSearchQuery('');
   };
 
   return (
