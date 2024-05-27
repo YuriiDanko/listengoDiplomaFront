@@ -8,6 +8,7 @@ import SearchPage from '../../screens/SearchPage';
 import HomePage from '../../screens/HomePage';
 import AlbumPage from '../../screens/AlbumPage';
 import ArtistPage from '../../screens/ArtistPage';
+import PlaylistPage from '../../screens/PlaylistPage';
 
 const AppRouter = () => {
   const { user, logout } = useAuth();
@@ -28,6 +29,7 @@ const AppRouter = () => {
           <Route path='/' element={<HomePage />} />
           <Route path='/album' element={<AlbumPage />} />
           <Route path='/artist' element={<ArtistPage />} />
+          <Route path='/playlist' element={<PlaylistPage />} />
         </Route>
       )}
 

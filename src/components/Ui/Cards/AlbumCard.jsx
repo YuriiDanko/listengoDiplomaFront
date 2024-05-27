@@ -12,18 +12,15 @@ const AlbumCard = ({ album }) => {
   };
 
   return (
-    <Card
-      padding={'lg'}
-      maw={225}
-      shadow='xl'
-      style={{ cursor: 'pointer' }}
-      onClick={() => {
-        clickAlbum(album);
-        goToAlbumPage(album);
-      }}
-    >
+    <Card padding={'lg'} maw={225} shadow='xl' style={{ cursor: 'pointer' }}>
       <div>
-        <Image src={album.imageUrl} />
+        <Image
+          src={album.imageUrl}
+          onClick={() => {
+            clickAlbum(album);
+            goToAlbumPage(album);
+          }}
+        />
       </div>
       <Card.Section inheritPadding>
         <Text size='md' fw={'bold'} truncate='end' pt={5} pb={10}>

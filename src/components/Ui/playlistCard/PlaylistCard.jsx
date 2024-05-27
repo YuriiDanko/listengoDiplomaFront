@@ -4,9 +4,16 @@ import cl from './PlaylistCard.module.css';
 import { IconX } from '@tabler/icons-react';
 import { useAuth } from '../../../hooks/auth';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const PlaylistCard = ({ playlist }) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const goToPlaylist = () => {
+    console.log({ playlist });
+    navigate('/playlist', { state: { playlist } });
+  };
 
   const removeOrDeletePlaylist = () => {
     if (user.userId == playlist.creator) {
@@ -38,6 +45,7 @@ const PlaylistCard = ({ playlist }) => {
           width={64}
           style={{ aspectRatio: '1/1' }}
           radius={5}
+          onClick={goToPlaylist}
         />
         <div className={cl.textContainer}>
           <Text size='md' className={cl.playlistName}>
