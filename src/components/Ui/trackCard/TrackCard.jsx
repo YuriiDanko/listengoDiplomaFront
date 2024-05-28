@@ -1,8 +1,8 @@
 import React from 'react';
-import { ActionIcon, Card, Flex, Image, Skeleton, Text } from '@mantine/core';
+import { Card, Flex, Image, Skeleton, Text } from '@mantine/core';
 import { useTrackContext } from '../../../hooks/track';
-import { IconPlus } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
+import PlaylistSelect from '../playlistSelect/PlaylistSelect';
 
 const TrackCard = ({ track }) => {
   const { clickTrack } = useTrackContext();
@@ -38,14 +38,7 @@ const TrackCard = ({ track }) => {
           </Text>
         </div>
         <Flex pb={15} justify={'center'}>
-          <ActionIcon
-            radius={20}
-            onClick={() => {
-              console.log('added ' + track.trackName);
-            }}
-          >
-            <IconPlus></IconPlus>
-          </ActionIcon>
+          <PlaylistSelect track={track} />
         </Flex>
       </Card.Section>
     </Card>

@@ -1,45 +1,66 @@
 import { Flex, Image, ScrollArea, Text } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
 import axios from 'axios';
 import PlaylistTrackCard from '../components/Ui/Cards/PlaylistTrackCard';
 
 const PlaylistPage = () => {
-  const location = useLocation();
-  const { playlist } = location.state || {};
+  const { id } = useParams();
   const { user } = useAuth();
-  const [playlistTracks, setPlaylistTracks] = useState();
+  const [playlist, setPlaylist] = useState();
+  const [playlistTracks, setPlaylistTracks] = useState([]);
+  const [userName, setUserName] = useState();
 
   const getPlaylistSong = async () => {
-    if (playlist.songs.length > 0) {
-      const songString =
-        playlist &&
-        playlist.songs
-          .map((song) => {
-            return song.trackId;
-          })
-          .join(',');
+    const response = await axios({
+      method: 'get',
+      url: `http://localhost:8080/playlist/${id}/songs`,
+      headers: {
+        Authorization: 'Bearer ' + user.token,
+      },
+    });
 
-      console.log(songString);
+    setPlaylist(response.data);
 
-      const response = await axios({
-        method: 'get',
-        url: `http://localhost:8080/tracks/${songString}`,
-        headers: {
-          Authorization: 'Bearer ' + user.token,
-        },
-      });
+    const songString =
+      response &&
+      response.data.songs
+        .map((song) => {
+          return song.trackId;
+        })
+        .join(',');
 
-      setPlaylistTracks(response.data.tracks);
-    } else {
-      setPlaylistTracks([]);
-    }
+    const tracksResponse = songString
+      ? await axios({
+          method: 'get',
+          url: `http://localhost:8080/tracks/${songString}`,
+          headers: {
+            Authorization: 'Bearer ' + user.token,
+          },
+        })
+      : { data: [] };
+
+    const userNameresponse = await axios({
+      method: 'get',
+      url: `http://localhost:8080/user/${response.data.creator}`,
+      headers: {
+        Authorization: 'Bearer ' + user.token,
+      },
+    });
+
+    setUserName(userNameresponse.data.userName);
+
+    setPlaylistTracks(tracksResponse.data.tracks);
   };
 
   useEffect(() => {
     getPlaylistSong();
-  }, [playlist.songs]);
+  }, [id]);
+
+  if (!playlist) {
+    return;
+  }
 
   return (
     <Flex p={30} h={780} justify={'space-between'} w={'100%'}>
@@ -48,7 +69,7 @@ const PlaylistPage = () => {
         <Text size='55px' pb={10}>
           {playlist.playlistName}
         </Text>
-        <Text size='40px'>{user.username}</Text>
+        <Text size='40px'>{userName}</Text>
       </Flex>
       <Flex w={'50%'} justify={'center'}>
         <ScrollArea h={700} type='always'>
@@ -60,6 +81,8 @@ const PlaylistPage = () => {
                   track={track}
                   index={index}
                   playlist={playlist}
+                  playlists={playlistTracks}
+                  setPlaylistTracks={setPlaylistTracks}
                 />
               ))
             ) : (

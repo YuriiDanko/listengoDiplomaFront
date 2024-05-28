@@ -1,13 +1,29 @@
 import React from 'react';
-import { ActionIcon, Flex, Text } from '@mantine/core';
+import { ActionIcon, Flex, Menu, Text } from '@mantine/core';
 import { IconMinus, IconPlus } from '@tabler/icons-react';
 import { useTrackContext } from '../../../hooks/track';
 import { convertMillisToMinutesAndSeconds } from '../../../helpers/time';
 import { useAuth } from '../../../hooks/auth';
+import axios from 'axios';
 
-const PlaylistTrackCard = ({ track, index, playlist }) => {
+const PlaylistTrackCard = ({ track, index, playlist, playlists, setPlaylistTracks }) => {
   const { clickTrack } = useTrackContext();
   const { user } = useAuth();
+
+  const removeSong = async (trackId) => {
+    console.log(trackId);
+
+    await axios({
+      method: 'put',
+      url: `http://localhost:8080/remove-song/${trackId}?playlistId=${playlist.playlistId}`,
+      headers: {
+        Authorization: 'Bearer ' + user.token,
+      },
+    });
+
+    const newPlaylists = playlists.filter((track) => track.trackId !== trackId);
+    setPlaylistTracks(newPlaylists);
+  };
 
   return (
     <Flex
@@ -40,7 +56,7 @@ const PlaylistTrackCard = ({ track, index, playlist }) => {
           <ActionIcon
             radius={'xl'}
             onClick={() => {
-              console.log('removed');
+              removeSong(track.trackId);
             }}
           >
             <IconMinus height={20}></IconMinus>

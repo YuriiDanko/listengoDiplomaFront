@@ -29,7 +29,7 @@ const AppRouter = () => {
           <Route path='/' element={<HomePage />} />
           <Route path='/album' element={<AlbumPage />} />
           <Route path='/artist' element={<ArtistPage />} />
-          <Route path='/playlist' element={<PlaylistPage />} />
+          <Route path='/playlist/:id' element={<PlaylistPage />} />
         </Route>
       )}
 

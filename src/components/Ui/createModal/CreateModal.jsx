@@ -12,7 +12,6 @@ const CreateModal = ({ onClose, setPlaylists }) => {
   });
 
   const handleClick = async (e) => {
-    e.preventDefault();
     try {
       const response = await axios({
         method: 'post',
@@ -31,6 +30,7 @@ const CreateModal = ({ onClose, setPlaylists }) => {
       console.log(error);
     }
     onClose();
+    window.location.reload();
   };
 
   return (

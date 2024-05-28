@@ -1,8 +1,9 @@
-import { ActionIcon, Flex, Text } from '@mantine/core';
+import { ActionIcon, Flex, Menu, Text } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import React from 'react';
 import { convertMillisToMinutesAndSeconds } from '../../../helpers/time';
 import { useTrackContext } from '../../../hooks/track';
+import PlaylistSelect from '../playlistSelect/PlaylistSelect';
 
 export const AlbumTrackCard = ({ track, index }) => {
   const { clickTrack } = useTrackContext();
@@ -34,14 +35,7 @@ export const AlbumTrackCard = ({ track, index }) => {
         </div>
       </Flex>
       <Flex align={'center'} gap={20}>
-        <ActionIcon
-          radius={'xl'}
-          onClick={() => {
-            console.log('added');
-          }}
-        >
-          <IconPlus height={20}></IconPlus>
-        </ActionIcon>
+        <PlaylistSelect />
         <Text size='xs' fw={'bold'}>
           {convertMillisToMinutesAndSeconds(track.durationMs)}
         </Text>

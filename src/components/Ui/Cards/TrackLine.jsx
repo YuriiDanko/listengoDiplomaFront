@@ -3,6 +3,7 @@ import React from 'react';
 import { useTrackContext } from '../../../hooks/track';
 import { useNavigate } from 'react-router-dom';
 import { IconPlus } from '@tabler/icons-react';
+import PlaylistSelect from '../playlistSelect/PlaylistSelect';
 
 const TrackLine = ({ track }) => {
   const { clickTrack } = useTrackContext();
@@ -37,14 +38,7 @@ const TrackLine = ({ track }) => {
           </Text>
         </Flex>
         <Flex pb={15} justify={'center'}>
-          <ActionIcon
-            radius={20}
-            onClick={() => {
-              console.log('added ' + track.trackName);
-            }}
-          >
-            <IconPlus></IconPlus>
-          </ActionIcon>
+          <PlaylistSelect track={track} />
         </Flex>
       </Card.Section>
     </Card>
