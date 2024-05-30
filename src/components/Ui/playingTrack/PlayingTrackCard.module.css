@@ -1,0 +1,8 @@
+.textDecor {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.textDecor:hover {
+  text-decoration: underline;
+}

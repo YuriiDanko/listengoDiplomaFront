@@ -65,10 +65,9 @@ const PlaylistCard = ({ playlist }) => {
           width={64}
           style={{ aspectRatio: '1/1' }}
           radius={5}
-          onClick={goToPlaylist}
         />
         <div className={cl.textContainer}>
-          <Text size='md' className={cl.playlistName}>
+          <Text size='md' className={cl.playlistName} onClick={goToPlaylist}>
             {playlist.playlistName}
           </Text>
           <Text size='xs' className={cl.playlistAuthor}>

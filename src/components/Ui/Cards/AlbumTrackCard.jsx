@@ -35,7 +35,7 @@ export const AlbumTrackCard = ({ track, index }) => {
         </div>
       </Flex>
       <Flex align={'center'} gap={20}>
-        <PlaylistSelect />
+        <PlaylistSelect track={track} />
         <Text size='xs' fw={'bold'}>
           {convertMillisToMinutesAndSeconds(track.durationMs)}
         </Text>

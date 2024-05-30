@@ -1,9 +1,9 @@
-import { ActionIcon, Card, Flex, Image, Text } from '@mantine/core';
+import { Card, Flex, Image, Text } from '@mantine/core';
 import React from 'react';
 import { useTrackContext } from '../../../hooks/track';
 import { useNavigate } from 'react-router-dom';
-import { IconPlus } from '@tabler/icons-react';
 import PlaylistSelect from '../playlistSelect/PlaylistSelect';
+import cl from './TrackLine.module.css';
 
 const TrackLine = ({ track }) => {
   const { clickTrack } = useTrackContext();
@@ -29,6 +29,7 @@ const TrackLine = ({ track }) => {
             {track.trackName}
           </Text>
           <Text
+            className={cl.textDecor}
             pb={5}
             onClick={() => {
               goToArtistPage(track.artist.artistId);

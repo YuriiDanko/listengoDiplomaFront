@@ -3,6 +3,7 @@ import { Card, Flex, Image, Skeleton, Text } from '@mantine/core';
 import { useTrackContext } from '../../../hooks/track';
 import { useNavigate } from 'react-router-dom';
 import PlaylistSelect from '../playlistSelect/PlaylistSelect';
+import cl from './TrackCard.module.css';
 
 const TrackCard = ({ track }) => {
   const { clickTrack } = useTrackContext();
@@ -28,6 +29,7 @@ const TrackCard = ({ track }) => {
             {track.trackName}
           </Text>
           <Text
+            className={cl.textDecor}
             pb={5}
             truncate='end'
             onClick={() => {

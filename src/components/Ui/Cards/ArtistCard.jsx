@@ -1,6 +1,7 @@
 import { Card, Image, Skeleton, Text } from '@mantine/core';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import cl from './TrackLine.module.css';
 
 const ArtistCard = ({ artist }) => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const ArtistCard = ({ artist }) => {
         <Image src={artist.imageUrl} h={250} />
       </div>
       <Card.Section inheritPadding>
-        <Text size='md' fw={'bold'} truncate='end' pt={5} pb={10}>
+        <Text size='md' fw={'bold'} truncate='end' pt={5} pb={10} className={cl.textDecor}>
           {artist.artistName}
         </Text>
       </Card.Section>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Flex, Image, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+import cl from './PlayingTrackCard.module.css';
 
 const PlayingTrackCard = ({ track }) => {
   if (!track) {
@@ -20,7 +21,10 @@ const PlayingTrackCard = ({ track }) => {
         <Text fw={'bold'} truncate={'end'}>
           {track.name}
         </Text>
-        <Text onClick={() => goToArtistPage(track.artists[0].uri.split(':')[2])}>
+        <Text
+          onClick={() => goToArtistPage(track.artists[0].uri.split(':')[2])}
+          className={cl.textDecor}
+        >
           {track.artists[0].name}
         </Text>
       </Flex>

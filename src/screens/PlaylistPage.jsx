@@ -64,7 +64,7 @@ const PlaylistPage = () => {
 
   return (
     <Flex p={30} h={780} justify={'space-between'} w={'100%'}>
-      <Flex direction={'column'} align={'center'} w={'50%'}>
+      <Flex direction={'column'} align={'center'} justify={'center'} w={'50%'}>
         <Image src={playlist.imageUrl} w={500} pb={10} h={500} />
         <Text size='55px' pb={10}>
           {playlist.playlistName}

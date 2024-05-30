@@ -7,6 +7,7 @@ import { useAuth } from '../hooks/auth';
 import AlbumCard, { AlbumCardSkeleton } from '../components/Ui/Cards/AlbumCard';
 import { TrackCardSkeleton } from '../components/Ui/trackCard/TrackCard';
 import ArtistCard, { ArtistCardSkeleton } from '../components/Ui/Cards/ArtistCard';
+import PlayCard from '../components/Ui/Cards/PlayCard';
 
 const SearchPage = () => {
   const { user } = useAuth();
@@ -14,15 +15,18 @@ const SearchPage = () => {
   const [tracks, setTracks] = useState([]);
   const [albums, setAlbums] = useState([]);
   const [artists, setArtists] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
 
   const getSearchResponse = async () => {
     const searchResult = await axios({
       method: 'get',
-      url: `http://localhost:8080/search/${searchParams.get('query')}`,
+      url: `http://localhost:8080/search/${searchParams.get('query')}/${user.userId}`,
       headers: {
         Authorization: 'Bearer ' + user.token,
       },
     });
+
+    console.log(searchResult.data);
 
     const trackString = searchResult.data.tracks.map((track) => track.trackId).join(',');
     const albumsString = searchResult.data.albums.map((album) => album.albumId).join(',');
@@ -62,6 +66,7 @@ const SearchPage = () => {
     });
 
     setArtists(artistsResult.data.artists);
+    setPlaylists(searchResult.data.playlists);
   };
 
   console.log(artists.data);
@@ -89,6 +94,20 @@ const SearchPage = () => {
             ? albums.map((album) => <AlbumCard key={album.albumId} album={album} />)
             : Array.from(Array(14).keys()).map((index) => <AlbumCardSkeleton key={index} />)}
         </SimpleGrid>
+        <Text fw={'bold'} pb={10} pt={10}>
+          Other user's playlists
+        </Text>
+        {playlists.length > 0 ? (
+          <div>
+            <SimpleGrid cols={7}>
+              {playlists.length > 0
+                ? playlists.map((playlist) => <PlayCard playlist={playlist} />)
+                : Array.from(Array(14).keys()).map((index) => <AlbumCardSkeleton key={index} />)}
+            </SimpleGrid>
+          </div>
+        ) : (
+          <Text>No Playlists were found</Text>
+        )}
         <Text fw={'bold'} pb={10} pt={10}>
           Top Artist Searched
         </Text>

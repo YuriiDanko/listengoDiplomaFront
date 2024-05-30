@@ -2,6 +2,7 @@ import { Card, Image, Skeleton, Text } from '@mantine/core';
 import React from 'react';
 import { useTrackContext } from '../../../hooks/track';
 import { useNavigate } from 'react-router-dom';
+import cl from './TrackLine.module.css';
 
 const AlbumCard = ({ album }) => {
   const { clickAlbum } = useTrackContext();
@@ -26,7 +27,9 @@ const AlbumCard = ({ album }) => {
         <Text size='md' fw={'bold'} truncate='end' pt={5} pb={10}>
           {album.albumName}
         </Text>
-        <Text pb={5}>{album.artistName}</Text>
+        <Text pb={5} className={cl.textDecor}>
+          {album.artistName}
+        </Text>
       </Card.Section>
     </Card>
   );
