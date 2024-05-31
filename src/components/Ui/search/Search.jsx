@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import cl from './Search.module.css';
 import { TextInput } from '@mantine/core';
 import { IconCheckbox, IconHome, IconList, IconSearch } from '@tabler/icons-react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const submit = (e) => {
     e.preventDefault();
-    const queryParams = new URLSearchParams({ query: searchQuery });
+    const queryParams = new URLSearchParams({ query: searchQuery.replace(/\/|\\/, '') });
     navigate({ pathname: '/search', search: `?${queryParams}` });
     setSearchQuery('');
   };
