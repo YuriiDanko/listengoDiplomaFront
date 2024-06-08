@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from '
 import axios from 'axios';
 import { useTrackContext } from './track';
 import useSpotifyAuth from './spotify';
+import { notifications } from '@mantine/notifications';
 
 const AuthContext = createContext();
 
@@ -29,24 +30,38 @@ const AuthProvider = ({ children }) => {
   };
 
   const login = async (username, password) => {
-    const res = await axios.post('http://localhost:8080/auth/login', {
-      username,
-      password,
-    });
-    setUser(res.data);
-    initiateAuth();
-    return res;
+    try {
+      const res = await axios.post('http://localhost:8080/auth/login', {
+        username,
+        password,
+      });
+      setUser(res.data);
+      initiateAuth();
+      return res;
+    } catch (e) {
+      notifications.show({
+        title: 'Auth Error',
+        message: 'Username or password is incorrect. Try again!',
+      });
+    }
   };
 
   const register = async (username, email, password) => {
     console.log(username, password);
-    const res = await axios.post('http://localhost:8080/auth/register', {
-      username,
-      email,
-      password,
-    });
-    setUser(res.data);
-    return res;
+    try {
+      const res = await axios.post('http://localhost:8080/auth/register', {
+        username,
+        email,
+        password,
+      });
+      setUser(res.data);
+      return res;
+    } catch (e) {
+      notifications.show({
+        title: 'Auth Error',
+        message: 'Username or Email is already taken!',
+      });
+    }
   };
 
   const contextValue = useMemo(
